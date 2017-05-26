@@ -1,0 +1,42 @@
+{% extends 'main_auth.html'%}
+
+{% block content %}
+
+<div class="container">
+    {% with massages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                {{ meesage }}
+            {% endfor %}
+        {% endif%}
+    {% endwith %}
+
+    <h3>Add Item</h3>
+    <form action="/catalog/{{category_item.Category_items.name}}/{{category_item.Category_items.id}}/edit/" method="POST">
+        <div class="form-group">
+            <label for="title-name">Title:</label>
+            <input class="form-control" id="title-name" type="text" name="title" value={{category_item.Category_items.name}}><br>
+        </div>
+        <div class="form-group">
+            <label for="title-description">Description:</label>
+            <textarea class="form-control" id="title-description" type="text" name="description" rows="6">{{category_item.Category_items.description}}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="category">Category:</label>
+            <select class="form-control" id="category" name="category_id">
+                {% for category in categories %}
+                {% if category.id == category_item.Category.id %}
+                    <option selected value={{category.id}}>{{category.name}}</option>
+                {% else %}
+                    <option value={{category.id}}>{{category.name}}</option>
+                {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-success">Submit</button>
+        <button type="button" class="btn btn-deafult" onclick="history.go(-1);">Cancel</button>
+    </form>
+
+</div>
+
+{% endblock %}

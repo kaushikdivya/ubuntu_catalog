@@ -1,0 +1,32 @@
+{% extends 'main_auth.html'%}
+
+{% block content %}
+
+<div class="container">
+    {% with massages = get_flashed_messages() %}
+    {{messages}}
+        {% if messages %}
+        <ul class=flashes>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{ category_item.Category_items.name }}</h3>
+                </div>
+                <div class="panel-body">
+                    <p>{{ category_item.Category_items.description}}</p>
+                    <p><a class="edit_delete" href='/catalog/{{ category_item.Category_items.name }}/{{ category_item.Category_items.id }}/edit/'>Edit | </a><a class="edit_delete" href='/catalog/{{ category_item.Category_items.name }}/{{ category_item.Category_items.id }}/delete/'>Delete</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

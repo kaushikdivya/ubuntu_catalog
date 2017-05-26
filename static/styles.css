@@ -1,0 +1,45 @@
+body {
+    background-color: whitesmoke;
+}
+
+a{
+    text-decoration: none !important;
+    color: darkorange;
+}
+
+.navbar-default .navbar-link {
+    color: floralwhite;
+}
+
+.navbar-text a {
+    color: floralwhite;
+}
+.header {
+    background-color:cadetblue;
+    color: antiquewhite;
+}
+
+.panel-body {
+    color: darkorange;
+    
+}
+.sub-text {
+    color: gray;
+}
+.login {
+    margin-top: 25px;
+    margin-left: 850px;
+}
+
+a.edit_delete {
+    color: #333;
+}
+
+.data {
+    white-space: pre-wrap;
+}
+
+.flashes {
+    color: black;
+    background-color: green;
+}
