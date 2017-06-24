@@ -6,6 +6,7 @@
   
 * Prerequisite
   * Install postgres database and python 2.7
+  * Create database using setting.py and database_setup.py
   
 * Run
   * python application_auth.py
