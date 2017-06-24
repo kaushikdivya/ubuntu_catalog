@@ -494,8 +494,8 @@ def category_list_JSON(category, category_id):
 
 
 @app.route('/catalogs/JSON')
-'''Categories JSON response'''
 def categories_JSON():
+    '''Categories JSON response'''
     categories = session.query(Category).all()
     return jsonify(category=[i.serialize for i in categories])
 
