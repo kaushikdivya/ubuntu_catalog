@@ -4,8 +4,8 @@ import psycopg2
 from sqlalchemy.orm import sessionmaker
 # from sqlalchemy.ext.declarative import declarative_base
 from database import db_connect, create_base
-from catagory import create_category
-from catagory_items import create_category_items
+from category import create_category
+from category_items import create_category_items
 from user_info import create_user
 import settings
 import sys
@@ -96,7 +96,7 @@ def check_category_sub_category(category, category_id, sub_category, sub_categor
     catg_item = check_sub_category_name_id(sub_category, sub_category_id)
     if catg is not None and all_categories is not None and catg_item is not None:
         category_item = session.query(Category, Category_items).filter(
-            Category.id == Category_items.catagory_id).filter(
+            Category.id == Category_items.category_id).filter(
             Category_items.id == sub_category_id).filter(
             Category_items.expiry_date == None).one()
         return catg, category_item, all_categories
@@ -332,7 +332,7 @@ def catelog_home():
         item = Category_items()
         item.name = title
         item.description = description
-        item.catagory_id = category_id
+        item.category_id = category_id
         session.add(item)
         session.commit()
         flash('Item added successfully')
@@ -340,7 +340,7 @@ def catelog_home():
     else:
         all_categories = session.query(Category).all()
         latest_subcatagories = session.query(Category, Category_items).filter(
-                    Category.id == Category_items.catagory_id).filter(
+                    Category.id == Category_items.category_id).filter(
                     Category_items.expiry_date == None).order_by(
                     Category_items.modified_time.desc())[:5]
         if 'username' not in login_session:
@@ -359,7 +359,7 @@ def category_list(category, category_id):
     catg, all_categories = check_category_name_id(category, category_id)
     if catg is not None or all_categories is not None:
         category_items = session.query(Category_items, Category).filter(
-            Category.id == Category_items.catagory_id).filter(
+            Category.id == Category_items.category_id).filter(
             Category.id == category_id).filter(
             Category_items.expiry_date == None)
         if category_items.count() == 0:
@@ -435,13 +435,13 @@ def edit_item(sub_category, sub_category_id):
                 Category_items.id == sub_category_id).one()
             category_item.name = title
             category_item.description = description
-            category_item.catagory_id = int(category_id)
+            category_item.category_id = int(category_id)
             category_item.modified_time = datetime.datetime.now(pytz.utc)
             session.add(category_item)
             session.commit()
             flash("Item updated successfully")
             category_item = session.query(Category, Category_items).filter(
-                            Category.id == Category_items.catagory_id).filter(
+                            Category.id == Category_items.category_id).filter(
                             Category_items.id == sub_category_id).one()
             category = category_item.Category.name
             category_id = category_item.Category.id
@@ -455,7 +455,7 @@ def edit_item(sub_category, sub_category_id):
         else:
             categories = session.query(Category).all()
             category_item = session.query(Category, Category_items).filter(
-                            Category.id == Category_items.catagory_id).filter(
+                            Category.id == Category_items.category_id).filter(
                             Category_items.id == sub_category_id).one()
             return render_template('edit_item.html',
                                    category_item=category_item,
@@ -480,7 +480,7 @@ def delete_item(sub_category, sub_category_id):
 def category_list_JSON(category, category_id):
     '''Category and category item JSON response'''
     category_items = session.query(Category_items, Category).filter(
-                    Category.id == Category_items.catagory_id).filter(
+                    Category.id == Category_items.category_id).filter(
                     Category.id == category_id).filter(
                     Category_items.expiry_date == None)
     if category_items.count() != 0:
@@ -504,7 +504,7 @@ def categories_JSON():
 def sub_category_JSON(category, category_id, sub_category, sub_category_id):
     '''Category item JSON response'''
     category_items = session.query(Category, Category_items).filter(
-            Category.id == Category_items.catagory_id).filter(
+            Category.id == Category_items.category_id).filter(
             Category_items.id == sub_category_id).filter(
             Category_items.expiry_date == None)
     if category_items.count() != 0:

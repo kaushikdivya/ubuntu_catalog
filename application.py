@@ -3,8 +3,8 @@ import psycopg2
 from sqlalchemy.orm import sessionmaker
 # from sqlalchemy.ext.declarative import declarative_base
 from database import db_connect, create_base
-from catagory import create_category
-from catagory_items import create_category_items
+from category import create_category
+from category_items import create_category_items
 import settings
 import sys
 
@@ -23,7 +23,7 @@ def catelog_home():
     
     all_categories = session.query(Category).all()
     latest_subcatagories = session.query(Category, Category_items
-        ).filter(Category.id==Category_items.catagory_id).order_by(
+        ).filter(Category.id==Category_items.category_id).order_by(
         Category_items.created_time)
     return render_template('home.html', all_categories=all_categories,
                     latest_subcatagories=latest_subcatagories)
@@ -32,7 +32,7 @@ def catelog_home():
 def category_list(category, category_id):
     all_categories = session.query(Category).all()
     category_items = session.query(Category_items, Category).filter(
-        Category.id==Category_items.catagory_id).filter(Category.id==category_id)
+        Category.id==Category_items.category_id).filter(Category.id==category_id)
     state = True
     for category_item in category_items:
         if category_item.Category.name != category:
@@ -51,7 +51,7 @@ def login():
 
 @app.route('/catalog/<category>/<int:category_id>/<sub_category>/<int:sub_category_id>/')
 def sub_category(category, category_id, sub_category, sub_category_id):
-    category_item = session.query(Category, Category_items).filter(Category.id==Category_items.catagory_id).filter(
+    category_item = session.query(Category, Category_items).filter(Category.id==Category_items.category_id).filter(
         Category_items.id==sub_category_id).one()
     if category == category_item.Category.name and sub_category == category_item.Category_items.name:
         return render_template('item_description.html', category_item=category_item)
