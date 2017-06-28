@@ -15,7 +15,7 @@
         <div id='signInButton'>
         <span class='g-signin'
             data-scope="openid email"
-            data-clientid='672636732492-r3g2u3bs3up774gsdct8dafs3p6hei50.apps.googleusercontent.com'
+            data-clientid='646098729563-ir9bou2r7dg2l5amuf8g15fu7dphe2fv.apps.googleusercontent.com'
             data-redirecturi='postmessage'
             data-accesstype='offline'
             data-cookiepolicy='single_host_origin'
@@ -42,6 +42,7 @@
                         success: function(result) {
                             // Handle or verify the server response if necessary.
                             if (result) {
+				console.log("login success");
                                 $('#result').html('Login Successful!</br>' + result +'</br>Redirecting...')
                                 setTimeout(function() {
                                     window.location.href = "/";
@@ -63,7 +64,7 @@
         <script>
             window.fbAsyncInit = function() {
                 FB.init({
-                appId      : '125182584736226',
+                appId      : '1291799284251187',
                 cookie     : true, // enable cookies to allow the server to access the session
                 xfbml      : true, // parse social plugins on this page.
                 version    : 'v2.8' // use version 2.2
